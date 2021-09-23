@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Generator rejestru pracy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+<style>
+	body {
+		background-color: #283593;
+		font-family: 'Roboto', sans-serif;
+	}
+	#categories {
+		margin: auto;
+		width: 1050px;
+		height: 400px;
+		padding: 25px;
+	}
+	.category-button, .function-button {
+		padding: 10px;
+		width: 300px;
+		height: 40px;
+		background-color: #283593;
+		border: 5px solid #F2F2F2;
+		color: #ffffff;
+		font-size: 32px;
+		float: left;
+		margin: 10px;
+		position: relative;
+	}
+	.category-text, .function-text {
+		margin: 0;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		-ms-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+	}
+	a, a:hover {
+		text-decoration: none;
+	}
+	#generatedString {
+		color: #ffffff;
+		text-align: center;
+		font-size: 32px;
+	}
+	#functions {
+		margin: auto;
+		width: 700px;
+		height: 400px;
+		padding: 25px;
+	}
+</style>
+</head>
+<body>
+	<div id="categories">
+		<div id="p1">
+			<a href="?p1=P013"><div class="category-button"><div class="category-text">P013</div></div></a>
+			<a href="?p1=HDBISOZ"><div class="category-button"><div class="category-text">HDBISOZ</div></div></a>
+		</div>
+		<div id="p2">
+			<div id="p2-hdbisoz">
+				<a href="?p1=HDBISOZ&p2=G1U1"><div class="category-button"><div class="category-text">G1U1</div></div></a>
+			</div>
+			<div id="p2-p013">
+				<a href="?p1=P013&p2=DUZ"><div class="category-button"><div class="category-text">DUZ</div></div></a>
+			</div>
+		</div>
+		<div id="p3">
+			<div id="p3-hdbisoz">
+				<a href="grp.html"><div class="category-button" style="font-size: 12px;" onclick="lastCategory('[PRZEKAZANO INFORMACJE]')"><div class="category-text">PRZEKAZANO INFORMACJE</div></div></a>
+			</div>
+			<div id="p3-p013">
+				<a href="grp.html"><div class="category-button" style="font-size: 12px;" onclick="lastCategory('[ZAL]')"><div class="category-text">ZAL</div></div></a>
+			</div>
+		</div>
+	</div>
+	<div id="generatedString"></div>
+	<div id="functions">
+		<a href="grp.html"><div class="function-button"><div class="function-text">Resetuj</div></div></a>
+		<a href="grp.html"><div class="function-button" style="font-size: 18px;" onclick="getGeneratedString()"><div class="function-text">Kopiuj do schowka</div></div><a/>
+	</div>
+
+	
+    
+    
+    <script>
+        function getParametersFromLink() {
+		
+            const queryString = window.location.search;
+			const urlParameters = new URLSearchParams(queryString);
+			
+			const p1 = urlParameters.get('p1') ;
+			const p2 = urlParameters.get('p2') ;
+			
+			var pstring = "";
+			
+			if (p1 === null) {
+				document.getElementById("p1").style.display = "initial";
+			} else {
+			
+				pstring += "[" + p1 + "]"; 
+					
+				if (p2 === null) {
+				
+					document.getElementById("p2").style.display = "initial";
+				
+					switch (pstring) {
+					case "[HDBISOZ]":
+						document.getElementById("p2-hdbisoz").style.display = "initial";
+					break;
+					case "[P013]":
+						document.getElementById("p2-p013").style.display = "initial";
+					break;
+					
+					default:
+					location.href = 'grp.html';
+					}
+					
+				} else {
+					
+					pstring += "[" + p2 + "]"; 
+					document.getElementById("p3").style.display = "initial";
+				
+					switch (pstring) {
+					case "[HDBISOZ][G1U1]":
+						document.getElementById("p3-hdbisoz").style.display = "initial";
+					break;
+					case "[P013][DUZ]":
+						document.getElementById("p3-p013").style.display = "initial";
+					break;
+					
+					default:
+					location.href = 'grp.html';
+					}
+					
+					
+					
+				
+				}
+				
+				
+			}; 
+			
+			var div = document.getElementById('generatedString');
+			div.innerHTML = "[ARiMR]" + pstring;
+        };
+		
+		function getGeneratedString() {
+			navigator.clipboard.writeText(document.getElementById('generatedString').innerHTML);
+		};
+		
+		function lastCategory(categoryName) {
+			
+			var div = document.getElementById('generatedString');
+			div.innerHTML += categoryName;
+			
+			getGeneratedString();
+		};
+		
+		window.onload = function() {
+			document.getElementById("p1").style.display = "none";
+			document.getElementById("p2").style.display = "none";
+			document.getElementById("p2-hdbisoz").style.display = "none";
+			document.getElementById("p2-p013").style.display = "none";
+			document.getElementById("p3").style.display = "none";
+			document.getElementById("p3-hdbisoz").style.display = "none";
+			document.getElementById("p3-p013").style.display = "none";
+			getParametersFromLink();
+		};
+    </script>
+</body>
+</html>
